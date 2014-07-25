@@ -1,0 +1,39 @@
+---
+driver:
+  name: docker
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-1004-chef
+    driver_config:
+      provision_command: apt-get install net-tools
+      image: ubuntu-1004-chef
+
+suites:
+  - name: master
+    run_list:
+      - recipe[optoro_redis::install]
+    attributes: {
+      optoro_redis: {
+        servers: [
+          { name: "Master", port: 6379 }
+        ]
+      }
+    }
+  - name: replication-client
+    run_list:
+      - recipe[optoro_redis::install]
+    attributes: {
+      optoro_redis: {
+        servers: [
+          { name: "Master", port: 6379 },
+          {
+            name: "Slave1",
+            port: "6380",
+            slaveof: { address: "127.0.0.1", port: 6379 }
+          }
+        ]
+      }
+    }
