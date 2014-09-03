@@ -1,5 +1,5 @@
 source "https://api.berkshelf.com"
 
-cookbook "redisio"
+cookbook "redisio", github: "brianbianco/redisio"
 
 metadata

@@ -13,9 +13,9 @@ platforms:
 suites:
   - name: master
     run_list:
-      - recipe[optoro_redis::install]
+      - recipe[optoro_redis]
     attributes: {
-      optoro_redis: {
+      redisio: {
         servers: [
           { name: "Master", port: 6379 }
         ]
@@ -23,9 +23,9 @@ suites:
     }
   - name: replication-client
     run_list:
-      - recipe[optoro_redis::install]
+      - recipe[optoro_redis]
     attributes: {
-      optoro_redis: {
+      redisio: {
         servers: [
           { name: "Master", port: 6379 },
           {
