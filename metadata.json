@@ -1,1 +1,21 @@
-{"name":"optoro_redis","description":"Installs/Configures redis servers","long_description":"Installs/Configures redis servers","maintainer":"Jeff Gillis","maintainer_email":"jgillis@optoro.com","license":"All rights reserved","platforms":{},"dependencies":{"redisio":">= 0.0.0"},"recommendations":{},"suggestions":{},"conflicting":{},"providing":{},"replacing":{},"attributes":{},"groupings":{},"recipes":{},"version":"0.1.0"}
+{
+   "name" : "optoro_redis",
+   "conflicting" : {},
+   "attributes" : {},
+   "platforms" : {},
+   "license" : "All rights reserved",
+   "dependencies" : {
+      "redisio" : ">= 0.0.0"
+   },
+   "long_description" : "Installs/Configures redis servers",
+   "maintainer" : "Jeff Gillis",
+   "maintainer_email" : "jgillis@optoro.com",
+   "recommendations" : {},
+   "description" : "Installs/Configures redis servers",
+   "providing" : {},
+   "replacing" : {},
+   "groupings" : {},
+   "recipes" : {},
+   "suggestions" : {},
+   "version" : "0.1.1"
+}
