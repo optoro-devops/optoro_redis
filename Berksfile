@@ -1,5 +1,5 @@
-source "https://api.berkshelf.com"
+source 'http://berks-api.optoro.io'
 
-cookbook "redisio", github: "brianbianco/redisio"
+cookbook 'redisio', '~> 2.2.4'
 
 metadata
