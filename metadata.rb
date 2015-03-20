@@ -7,3 +7,4 @@ long_description 'Installs/Configures redis servers'
 version '0.1.2'
 
 depends 'redisio', '~> 2.2.4'
+depends 'optoro_monit'

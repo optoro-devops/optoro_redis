@@ -10,3 +10,4 @@
 include_recipe 'redisio'
 include_recipe 'redisio::install'
 include_recipe 'redisio::enable'
+include_recipe 'optoro_monit::redis'
