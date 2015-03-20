@@ -17,24 +17,32 @@ suites:
   - name: master
     run_list:
       - recipe[optoro_redis]
-    attributes: {
-      redisio: {
-        servers: [
-          { port: 6379 }
-        ]
-      }
-    }
+    attributes:
+      monit:
+        poll_start_delay: 0
+        mailserver:
+          host: localhost
+          port: 25
+        mail_format:
+          from: monit@localhost
+      redisio:
+        servers:
+          - port: 6379
   - name: replication-client
     run_list:
       - recipe[optoro_redis]
-    attributes: {
-      redisio: {
-        servers: [
-          { port: 6379 },
-          {
-            port: 6380,
-            slaveof: { address: "127.0.0.1", port: 6379 }
-          }
-        ]
-      }
-    }
+    attributes:
+      monit:
+        poll_start_delay: 0
+        mailserver:
+          host: localhost
+          port: 25
+        mail_format:
+          from: monit@localhost
+      redisio:
+        servers:
+          - port: 6379
+          - port: 6380
+            slaveof:
+              address: 127.0.0.1
+              port: 6379
