@@ -1,4 +1,4 @@
-require 'serverspec'
+require 'spec_helper'
 
 describe 'Redis Replication Client Daemon' do
   it 'is listening on port 6379' do
@@ -13,7 +13,7 @@ describe 'Redis Replication Client Daemon' do
     expect(process('redis-server')).to be_running
   end
 
-  describe file('/etc/redis/Slave1.conf') do
+  describe file('/etc/redis/6380.conf') do
     it { should be_file }
     it { should contain 'slaveof 127.0.0.1 6379' }
   end

@@ -1,4 +1,4 @@
-require 'serverspec'
+require 'spec_helper'
 
 describe 'Redis Daemon' do
   it 'is listening on port 6379' do
