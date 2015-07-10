@@ -16,6 +16,7 @@ platforms:
 suites:
   - name: master
     run_list:
+      - recipe[optoro_redis::test]
       - recipe[optoro_redis]
     attributes:
       monit:
@@ -30,6 +31,7 @@ suites:
           - port: 6379
   - name: replication-client
     run_list:
+      - recipe[optoro_redis::test]
       - recipe[optoro_redis]
     attributes:
       monit:
