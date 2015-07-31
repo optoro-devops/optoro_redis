@@ -1,0 +1,11 @@
+{
+  "id": "consul",
+  "groups": [
+    "optoro"
+  ],
+  "shell": "/bin/bash",
+  "home": "/dev/null",
+  "ssh_keys": [
+    "ssh-rsa PUBLIC_KEY"
+  ]
+}
