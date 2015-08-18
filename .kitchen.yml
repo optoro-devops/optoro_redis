@@ -16,6 +16,7 @@ platforms:
 suites:
   - name: master
     run_list:
+      - recipe[apt]
       - recipe[optoro_redis::test]
       - recipe[optoro_redis]
     attributes:
