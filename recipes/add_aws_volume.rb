@@ -5,6 +5,14 @@
 # Attach redis data dir volume
 include_recipe 'aws'
 
+# TODO: Move redis to a different location and remove /var/optoro
+directory '/var/optoro' do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
 directory '/var/optoro/redis' do
   owner 'redis'
   group 'redis'
