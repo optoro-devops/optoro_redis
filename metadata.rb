@@ -4,7 +4,7 @@ maintainer_email 'devops@optoro.com'
 license 'MIT'
 description 'Installs/Configures redis servers'
 long_description 'Installs/Configures redis servers'
-version '0.1.6'
+version '0.1.7'
 
 depends 'redisio', '~> 2.2.4'
 depends 'optoro_monit'
