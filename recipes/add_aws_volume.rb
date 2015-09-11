@@ -5,6 +5,15 @@
 # Attach redis data dir volume
 include_recipe 'aws'
 
+user 'redis' do
+  comment 'Redis service account'
+  home node['redisio']['default_settings']['homedir']
+  shell '/bin/false'
+end
+
+group 'redis' do
+end
+
 # TODO: Move redis to a different location and remove /var/optoro
 directory '/var/optoro' do
   owner 'root'
