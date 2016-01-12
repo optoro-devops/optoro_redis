@@ -1,17 +1,39 @@
 ---
-driver_plugin: vagrant
-driver_config:
-  require_chef_omnibus: 11.16.4
-  customize:
-    natdnshostresolver1: "on"
-    memory: 2048
-provisioner: chef_zero
-
+driver:
+  name: ec2
+  security_group_ids: ["sg-69ce330d"]
+  subnet_id: subnet-2f5f9f04
+  region: us-east-1
+  ssh_key: <%= ENV['AWS_SSH_KEY'] %>
+  availability_zone: us-east-1e
+  flavor_id: t2.small
+  image_id: ami-0d872c66
+  iam_profile_name: TestKitchenRole
+  associate_public_ip: false
+  username: ubuntu
+  user_data: "#!/bin/bash\napt-get update"
+  ssh_timeout: 20
+  ssh_retries: 5
 platforms:
-- name: ubuntu-14.04
-  driver_config:
-    box: opscode_ubuntu-14.04_chef-provisionerless
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box
+  - name: ubuntu-14.04
+    driver:
+
+#provisioner:
+#  name: chef_zero
+#  require_chef_omnibus: 11.16.4
+#driver_plugin: vagrant
+#driver_config:
+#  require_chef_omnibus: 11.16.4
+#  customize:
+#    natdnshostresolver1: "on"
+#    memory: 2048
+#provisioner: chef_zero
+#
+#platforms:
+#- name: ubuntu-14.04
+#  driver_config:
+#    box: opscode_ubuntu-14.04_chef-provisionerless
+#    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box
 
 suites:
   - name: master
@@ -19,6 +41,7 @@ suites:
       - recipe[apt]
       - recipe[optoro_redis::test]
       - recipe[optoro_redis]
+      - recipe[optoro_redis::consul]
     attributes:
       monit:
         poll_start_delay: 0
@@ -30,6 +53,8 @@ suites:
       redisio:
         servers:
           - port: 6379
+      optoro_consul:
+        server: false
   - name: replication-client
     run_list:
       - recipe[optoro_redis::test]
