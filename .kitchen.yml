@@ -8,20 +8,37 @@ driver_config:
 provisioner: chef_zero
 
 platforms:
-- name: ubuntu-14.04
-  driver_config:
-    box: opscode_ubuntu-14.04_chef-provisionerless
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box
+  - name: ubuntu-14.04
+    driver_config:
+        box: opscode_ubuntu-14.04_chef-provisionerless
+        box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: 12.6.0
 
 suites:
   - name: master
     run_list:
+      - recipe[apt]
       - recipe[optoro_redis::test]
       - recipe[optoro_redis]
     attributes:
+      optoro_redis:
+        register_consul_service: true
       redisio:
         servers:
           - port: 6379
+      optoro_consul:
+        server: false
+        service:
+          name: redis
+          tags:
+            - master
+          port: 6379
+          checks:
+            - { script: '/usr/local/bin/redis-cli PING', interval: '10s' }
+
   - name: replication-client
     run_list:
       - recipe[optoro_redis::test]
