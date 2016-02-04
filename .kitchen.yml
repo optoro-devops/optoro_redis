@@ -24,12 +24,11 @@ suites:
       - recipe[optoro_redis::test]
       - recipe[optoro_redis]
     attributes:
-      optoro_redis:
-        register_consul_service: true
       redisio:
         servers:
           - port: 6379
       optoro_consul:
+        register_consul_service: true
         server: false
         service:
           name: redis
