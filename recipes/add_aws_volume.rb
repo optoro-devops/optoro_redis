@@ -4,30 +4,7 @@
 
 # Attach redis data dir volume
 include_recipe 'aws'
-
-user 'redis' do
-  comment 'Redis service account'
-  home node['redisio']['default_settings']['homedir']
-  shell '/bin/false'
-end
-
-group 'redis' do
-end
-
-# TODO: Move redis to a different location and remove /var/optoro
-directory '/var/optoro' do
-  owner 'root'
-  group 'root'
-  mode '0755'
-  action :create
-end
-
-directory '/var/optoro/redis' do
-  owner 'redis'
-  group 'redis'
-  mode '0755'
-  action :create
-end
+data_directory = node['optoro_redis']['datadir']
 
 aws_ebs_volume 'redis_ebs_volume' do
   size 40
@@ -38,22 +15,20 @@ end
 # create a filesystem
 execute 'mkfs' do
   command 'mkfs -t ext4 /dev/xvdf'
-  not_if 'mountpoint /var/optoro/redis'
+  not_if "mountpoint #{data_directory}"
 end
 
-directory '/var/optoro/redis' do
+directory data_directory do
   owner 'redis'
   group 'redis'
   mode '0755'
   action :create
 end
 
-mount '/var/optoro/redis' do
+mount data_directory do
   device '/dev/xvdf'
   fstype 'ext4'
   options 'noatime,nobootwait'
   action [:enable, :mount]
-  not_if 'mountpoint /var/optoro/redis'
+  not_if "mountpoint #{data_directory}"
 end
-
-node.set['redisio']['default_settings']['datadir'] = '/var/optoro/redis'
