@@ -38,6 +38,27 @@ suites:
           checks:
             - { script: '/usr/local/bin/redis-cli PING', interval: '10s' }
 
+  - name: master-3.2
+    run_list:
+      - recipe[apt]
+      - recipe[optoro_redis::test]
+      - recipe[optoro_redis]
+    attributes:
+      redisio:
+        servers:
+          - port: 6379
+        version: 3.2.1
+      optoro_consul:
+        register_consul_service: true
+        server: false
+        service:
+          name: redis
+          tags:
+            - master
+          port: 6379
+          checks:
+            - { script: '/usr/local/bin/redis-cli PING', interval: '10s' }
+
   - name: replication-client
     run_list:
       - recipe[apt]
