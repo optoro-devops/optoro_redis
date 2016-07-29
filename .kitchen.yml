@@ -51,8 +51,8 @@ suites:
       optoro_consul:
         register_consul_service: true
         server: false
+        service_name: 'test-redis'
         service:
-          name: redis
           tags:
             - master
           port: 6379
