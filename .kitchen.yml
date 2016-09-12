@@ -1,21 +1,24 @@
 ---
-driver_plugin: vagrant
+driver_plugin: joyent
 driver_config:
   require_chef_omnibus: 12.6.0
-  customize:
-    natdnshostresolver1: "on"
-    memory: 2048
+  joyent_username: <%= ENV['SDC_CLI_ACCOUNT'] %>
+  joyent_keyfile: <%= ENV['SDC_CLI_IDENTITY'] %>
+  joyent_keyname: <%= ENV['SDC_CLI_KEY_ID'] %>
+  joyent_url: <%= ENV['SDC_CLI_URL'] %>
+  joyent_version: ~8.0
+  joyent_image_id: 5cdc6dde-d6ad-11e5-8b11-8337e6f86725
+  joyent_flavor_id: g4-general-4G
+
 provisioner: chef_zero
 
-platforms:
-  - name: ubuntu-14.04
-    driver_config:
-        box: opscode_ubuntu-14.04_chef-provisionerless
-        box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box
+transport:
+  ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
+  username: root
 
-provisioner:
-  name: chef_zero
-  require_chef_omnibus: 12.6.0
+platforms:
+- name: ubuntu-14.04
+  driver:
 
 suites:
   - name: master
@@ -27,6 +30,9 @@ suites:
       redisio:
         servers:
           - port: 6379
+      consul:
+        bind_addr: '127.0.0.1'
+        client_addr: '127.0.0.1'
       optoro_consul:
         register_consul_service: true
         server: false
@@ -48,11 +54,14 @@ suites:
         servers:
           - port: 6379
         version: 3.2.1
+      consul:
+        bind_addr: '127.0.0.1'
+        client_addr: '127.0.0.1'
       optoro_consul:
         register_consul_service: true
         server: false
         service:
-          name: redis
+          name: optoro-redis
           tags:
             - master
           port: 6379

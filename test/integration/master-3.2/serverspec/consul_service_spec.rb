@@ -15,12 +15,12 @@ describe 'Consul Service' do
   end
 
   it 'should be registered as master' do
-    expect(command('curl http://localhost:8500/v1/catalog/service/redis?tag=master').stdout)
+    expect(command('curl http://localhost:8500/v1/catalog/service/optoro-redis?tag=master').stdout)
       .to match(/redis/)
   end
 
   it 'should have a passing health check' do
-    expect(command('curl http://localhost:8500/v1/health/checks/redis?tag=master').stdout)
+    expect(command('curl http://localhost:8500/v1/health/checks/optoro-redis?tag=master').stdout)
       .to match(/passing/)
   end
 end
