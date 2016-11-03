@@ -14,13 +14,12 @@ describe 'Consul Service' do
     it { should be_listening }
   end
 
-  it 'should be registered as master' do
-    expect(command('curl http://localhost:8500/v1/catalog/service/redis?tag=master').stdout)
-      .to match(/redis/)
+  describe service('redis_exporter') do
+    it { should be_enabled }
+    it { should be_running }
   end
 
-  it 'should have a passing health check' do
-    expect(command('curl http://localhost:8500/v1/health/checks/redis?tag=master').stdout)
-      .to match(/passing/)
+  describe port(9121) do
+    it { should be_listening }
   end
 end
