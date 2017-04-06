@@ -1,4 +1,4 @@
-source 'http://berks-api.optoro.io'
+source 'https://supermarket.chef.io'
 
 metadata
 
