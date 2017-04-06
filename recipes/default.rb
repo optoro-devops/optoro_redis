@@ -7,6 +7,11 @@
 # All rights reserved - Do Not Redistribute
 
 # Install and enable redis server based on default attributes
+
+if node['redisio']['version'].to_f >= 3.2
+  node.override['redisio']['default_settings']['protected_mode'] = 'no'
+end
+
 include_recipe 'optoro_redis::create_redis_user'
 include_recipe 'optoro_redis::create_data_directory'
 include_recipe 'optoro_redis::consul'

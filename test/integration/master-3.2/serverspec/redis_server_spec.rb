@@ -13,3 +13,7 @@ end
 describe command('redis-server --version') do
   its(:stdout) { should match(/Redis server v=3.2.1/) }
 end
+
+describe file('/etc/redis/6379.conf') do
+  it { should contain 'protected-mode no' }
+end
