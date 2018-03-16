@@ -34,7 +34,7 @@ consul_definition 'redis-metrics' do
     check: {
       interval: '10s',
       timeout: '5s',
-      http: 'http://localhost:9121/metrics'
+      script: 'curl -s --fail --head http://localhost:9121/metrics &> /dev/null'
     }
   )
   notifies :reload, 'consul_service[consul]', :delayed
