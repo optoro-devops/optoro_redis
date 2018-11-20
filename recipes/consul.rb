@@ -5,11 +5,11 @@ consul_definition 'redis' do
   parameters(
     port: 6379,
     tags: ['redis'],
-    enableTagOverride: false,
+    enable_tag_override: false,
     check: {
       interval: '10s',
       timeout: '5s',
-      script: '/usr/local/bin/redis-cli ping'
+      tags: '["/usr/local/bin/redis-cli", "ping"]'
     }
   )
   notifies :reload, 'consul_service[consul]', :delayed
