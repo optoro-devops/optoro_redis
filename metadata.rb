@@ -6,7 +6,7 @@ description 'Installs/Configures redis servers'
 long_description 'Installs/Configures redis servers'
 issues_url 'https://github.com/optoro-devops/optoro_redis'
 source_url 'https://github.com/optoro-devops/optoro_redis'
-version '0.1.21'
+version '0.1.22'
 
 depends 'redisio', '~> 2.5.0'
 depends 'optoro_consul'
